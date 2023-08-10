@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop-api", "shop-api\shop-api.csproj", "{4E26D444-0C75-466D-BF07-FDB5A5E902F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop-db", "shop-db\shop-db.csproj", "{C92E64E1-F080-4252-BD7B-0D48EBBEC0ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4E26D444-0C75-466D-BF07-FDB5A5E902F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E26D444-0C75-466D-BF07-FDB5A5E902F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E26D444-0C75-466D-BF07-FDB5A5E902F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92E64E1-F080-4252-BD7B-0D48EBBEC0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92E64E1-F080-4252-BD7B-0D48EBBEC0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92E64E1-F080-4252-BD7B-0D48EBBEC0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92E64E1-F080-4252-BD7B-0D48EBBEC0ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
