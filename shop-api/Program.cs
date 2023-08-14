@@ -1,4 +1,6 @@
 
+using shop_db;
+
 namespace shop_api
 {
     public class Program
@@ -9,8 +11,8 @@ namespace shop_api
 
             // Add services to the container.
 
+            builder.Services.AddDbContext<ShopContext>();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
