@@ -1,14 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using shop_db.Models;
 
 namespace shop_db
 {
-    internal class ShopContext : DbContext
+    public class ShopContext : DbContext
     {
+        public const string ConnectionStringEnvVar = @"SHOP_DB_CS";
 
+        public DbSet<Item> Items { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvVar);
+            optionsBuilder.UseNpgsql(connectionString);
+        }
     }
 }

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "shop-db-debug": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SHOP_DB_CS": "Host=127.0.0.1:5432;Database=shop-db;Username=postgres;Password=app_password"
+      }
+    }
+  }
+}
