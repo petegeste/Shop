@@ -18,7 +18,7 @@ namespace shop_db
         }
 
         private static string BuildConnectionString() => $"Host={Environment.GetEnvironmentVariable(HostEnvVar)};" +
-            "Database=shop-db;" +
+            "Database=shop_db;" +
             $"Username={Environment.GetEnvironmentVariable(UserEnvVar)};" +
             $"Password={Environment.GetEnvironmentVariable(PasswordEnvVar)}";
     }

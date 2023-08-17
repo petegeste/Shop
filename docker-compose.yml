@@ -6,8 +6,8 @@ services:
       image: ${DOCKER_REGISTRY-}shop-db
       hostname: shopdb
       build:
-         context: .
-         dockerfile: shop-db/Dockerfile
+         context: shop-db/
+         dockerfile: Dockerfile
       environment:
          POSTGRES_USER: postgres
          POSTGRES_PASSWORD: app_password
@@ -17,8 +17,8 @@ services:
    shop-api:
       image: ${DOCKER_REGISTRY-}shop-api
       build:
-         context: .
-         dockerfile: shop-api/Dockerfile
+         context: shop-api/
+         dockerfile: Dockerfile
       environment:
          SHOP_DB_HOST: "shopdb:5432"
          SHOP_DB_USER: "postgres"
@@ -32,7 +32,7 @@ services:
    shop-webapp:
       image: ${DOCKER_REGISTRY-}shop-webapp
       build:
-         context: .
-         dockerfile: shop-webapp/Dockerfile
+         context: shop-webapp/
+         dockerfile: Dockerfile
       depends_on:
       - shop-db
