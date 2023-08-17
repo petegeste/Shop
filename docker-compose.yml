@@ -11,6 +11,8 @@ services:
       environment:
          POSTGRES_USER: postgres
          POSTGRES_PASSWORD: app_password
+         SHOP_DB_USER: postgres
+         SHOP_DB_PWD: app_password
 
    shop-api:
       image: ${DOCKER_REGISTRY-}shop-api

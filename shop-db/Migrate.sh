@@ -4,5 +4,4 @@
 # DO NOT EDIT IN VISUAL STUDIO #
 ################################
 
-/docker-entrypoint.sh
-/init/efbundle --connection ''
+/efbundle --connection 'Host=localhost:5432;Username=postgres;Password=app_password'

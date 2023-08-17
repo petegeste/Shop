@@ -16,5 +16,3 @@ LABEL version="1.0"
 WORKDIR /init
 COPY --from=build "/src/efbundle" "."
 COPY --from=build "/src/Launch.sh" "."
-
-ENTRYPOINT ["/init/Launch.sh"]
