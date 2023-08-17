@@ -7,6 +7,7 @@
     <RootNamespace>shop_api</RootNamespace>
     <UserSecretsId>c4d38133-84e2-4c54-9f1d-4381612ebdd4</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
