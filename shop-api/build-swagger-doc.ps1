@@ -1,0 +1,1 @@
+﻿swagger tofile --output shop-api.json .\bin\Debug\net7.0\shop-api.dll v1
