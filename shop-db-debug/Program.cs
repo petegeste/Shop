@@ -5,19 +5,18 @@ namespace shop_db_debug
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            var db = new ShopContext();
-            var item = new Item()
+
+            var cli = new HttpClient();
+            var api = new shop.ApiClient("http://localhost:80", cli);
+            var item = new shop.Item()
             {
                 Name = "Test",
-                Description = "Test test",
-                Price = 3.14m,
-                Inventory = 100
+                Description = "Test desc",
+                Price = 1.23,
             };
-            db.Items.Add(item);
-            db.SaveChanges();
+            await api.AddAsync(item);
         }
     }
 }
