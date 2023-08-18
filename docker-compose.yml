@@ -16,6 +16,7 @@ services:
 
    shop-api:
       image: ${DOCKER_REGISTRY-}shop-api
+      hostname: shopapi
       build:
          context: shop-api/
          dockerfile: Dockerfile
@@ -34,5 +35,10 @@ services:
       build:
          context: shop-webapp/
          dockerfile: Dockerfile
+      environment:
+         SHOP_API_HOST: "http://shopapi"
+      ports:
+      - "8080:80"
       depends_on:
       - shop-db
+      - shop-api

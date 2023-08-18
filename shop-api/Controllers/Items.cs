@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using shop_db;
+using shop_db.Models;
 
 namespace shop_api.Controllers
 {
@@ -15,10 +17,18 @@ namespace shop_api.Controllers
             DB = db;
         }
 
-        [HttpGet]
-        public IActionResult All()
+        [HttpGet("/all")]
+        public async Task<List<Item>> All()
         {
-            return Ok(DB.Items.ToList());
+            return await DB.Items.ToListAsync();
+        }
+
+        [HttpPost("/add")]
+        public async Task<IActionResult> PostItem([FromBody] Item item)
+        {
+            DB.Items.Add(item);
+            await DB.SaveChangesAsync();
+            return Ok();
         }
     }
 }
