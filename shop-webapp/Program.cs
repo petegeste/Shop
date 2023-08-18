@@ -14,6 +14,7 @@ namespace shop_webapp
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton(i => new shop.ApiClient(GetApiHostname(), new HttpClient()));
 
             var app = builder.Build();
 
@@ -35,6 +36,11 @@ namespace shop_webapp
             app.MapFallbackToPage("/_Host");
 
             app.Run();
+        }
+
+        private static string GetApiHostname()
+        {
+            return Environment.GetEnvironmentVariable("SHOP_API_HOST") ?? "http://localhost:80";
         }
     }
 }
