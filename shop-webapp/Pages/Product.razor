@@ -1,0 +1,59 @@
+﻿@page "/product/{ProductId}"
+@inject shop.ApiClient client
+<PageTitle>Shop | @Item?.Name</PageTitle>
+
+<div class="container m-0">
+    <div class="row">
+        <div class="col-4">
+            <div class="container mb-4">
+                <h3>@Item?.Name</h3>
+                <p>@Item?.Description</p>
+                <p>$@Item?.Price</p>
+            </div>
+        </div>
+        <div class="col-8">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner" style="height: 50vh">
+                    @{
+                        bool first = true;
+                    }
+                    @foreach (var img in Images)
+                    {
+                        <div class="carousel-item@(first ? " active" : "")">
+                            <img src="@img.ImageUrl" class="d-block w-100" alt="@img.Description" style="object-fit: scale-down">
+                        </div>
+                        first = false;
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? ProductId { get; set; }
+    public shop.Product? Item { get; set; }
+    public List<shop.ProductImageQueryResult> Images { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Item = await client.ItemAsync(new Guid(ProductId!));
+            Images = (await client.ImagesAsync(Item.Id)).ToList();
+        }
+        catch
+        {
+            
+        }
+    }
+}

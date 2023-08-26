@@ -9,17 +9,21 @@
 else if (items.Count == 0)
 {
     <p>Sorry, no items to show.</p>
+    <button class="btn btn-secondary" @onclick="Reload">Reload</button>
 }
 
-<div class="container-lg">
-    @foreach (var item in items ?? new List<shop.Product>())
-    {
-        <shop_webapp.Components.ItemSquare Product="item"/>
-    }
+<div class="album py-5">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in items ?? new List<shop.Product>())
+            {
+                <div class="col-md-4">
+                    <shop_webapp.Components.ItemSquare Product="item" />
+                </div>
+            }
+        </div>
+    </div>
 </div>
-
-<button class="btn btn-secondary" @onclick="Reload">Reload</button>
-
 
 @code {
     public List<shop.Product>? items { get; set; } = null;
