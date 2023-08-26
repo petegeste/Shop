@@ -1,5 +1,11 @@
 version: '3.9'
 
+networks:
+   frontend:
+      driver: bridge
+   backend:
+      driver: bridge
+
 services:
    shop-db:
       image: ${DOCKER_REGISTRY-}shop-db
@@ -12,6 +18,8 @@ services:
          POSTGRES_PASSWORD: app_password
          SHOP_DB_USER: postgres
          SHOP_DB_PWD: app_password
+      networks:
+      - backend
 
    shop-api:
       image: ${DOCKER_REGISTRY-}shop-api
@@ -28,6 +36,8 @@ services:
          ASPNETCORE_Kestrel__Certificates__Default__Path: shop-api.pfx
       depends_on:
       - shop-db
+      networks:
+      - backend
 
    shop-webapp:
       image: ${DOCKER_REGISTRY-}shop-webapp
@@ -41,6 +51,8 @@ services:
       depends_on:
       - shop-db
       - shop-api
+      networks:
+      - backend
 
    proxy:
       image: ${DOCKER_REGISTRY-}shop-proxy
@@ -53,3 +65,6 @@ services:
       depends_on:
       - shop-api
       - shop-webapp
+      networks:
+      - frontend
+      - backend
