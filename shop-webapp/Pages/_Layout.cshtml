@@ -1,5 +1,4 @@
-﻿@page "/"
-@using Microsoft.AspNetCore.Components.Web
+﻿@using Microsoft.AspNetCore.Components.Web
 @namespace shop_webapp.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -9,14 +8,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <script src="~/js/bootstrap.bundle.min.js"></script>
     <link href="css/site.css" rel="stylesheet" />
-    <link href="shop-webapp.styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link href="shop_webapp.styles.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
-<body class="p-3 m-0 border-0 bd-example m-0 border-0">
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+<body>
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">

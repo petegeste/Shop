@@ -1,0 +1,39 @@
+﻿@using shop;
+@inject shop.ApiClient client
+
+<div class="card">
+    <div class="carousel slide">
+        <div class="carousel-inner">
+            @foreach (var img in Images)
+            {
+                <div class="carousel-item">
+                    <img src="@img.ImageUrl" class="d-block w-100" alt="@img.Description" />
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="card-body">
+        <h5>@Product.Name</h5>
+        <p>$@Product.Price</p>
+    </div>
+</div>  `
+@code {
+    private List<ProductImageQueryResult> Images { get; set; } = new List<ProductImageQueryResult>();
+
+    [Parameter]
+    public shop.Product? Product { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var images = await client.ImagesAsync(Product.Id);
+        Images = images.ToList();
+    }
+}

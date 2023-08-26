@@ -1,22 +1,36 @@
 ﻿@page "/"
 @inject shop.ApiClient client
 
-<PageTitle>Index</PageTitle>
-
-<p>Here's a some json</p>
-<ul>@foreach (var item in items) {
-    <li>@item</li>
+@if (items is null) {
+    <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
 }
-</ul>
+else if (items.Count == 0)
+{
+    <p>Sorry, no items to show.</p>
+}
+
+<div class="container-lg">
+    @foreach (var item in items ?? new List<shop.Product>())
+    {
+        <shop_webapp.Components.ItemSquare Product="item"/>
+    }
+</div>
+
+<button class="btn btn-secondary" @onclick="Reload">Reload</button>
 
 
 @code {
-    public List<string> items { get; set; } = new List<string>();
-    protected override void OnInitialized()
-    {
-        var res = client.AllAsync().GetAwaiter().GetResult();
-        items = res.Select(i => i.Name).ToList();
+    public List<shop.Product>? items { get; set; } = null;
 
-        base.OnInitialized();
+    protected override async Task OnInitializedAsync()
+    {
+        await Reload();
+    }
+
+    public async Task Reload()
+    {
+        items = (await client.AllAsync())?.ToList();
     }
 }

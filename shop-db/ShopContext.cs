@@ -9,8 +9,10 @@ namespace shop_db
         public const string UserEnvVar = @"SHOP_DB_USER";
         public const string PasswordEnvVar = @"SHOP_DB_PWD";
 
-        public DbSet<Item> Items { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<ProductImage> ProductImages { get; set; } = null!;
+        public DbSet<ImageData> Images { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

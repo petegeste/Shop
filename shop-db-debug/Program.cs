@@ -10,7 +10,7 @@ namespace shop_db_debug
 
             var cli = new HttpClient();
             var api = new shop.ApiClient("http://localhost:80", cli);
-            var item = new shop.Item()
+            var item = new shop.Product()
             {
                 Name = "Test",
                 Description = "Test desc",

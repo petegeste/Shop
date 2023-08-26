@@ -26,10 +26,7 @@ namespace shop_api
             }
 
             //app.UseHttpsRedirection();
-
             //app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();

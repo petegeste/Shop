@@ -2,16 +2,19 @@
 
 A project to test kubernetes development.
 
-In this solution is:
+## Structure
 
-### shop-db
+**shop-db**
+
 An EF Core project that provides access to a postgres database. This will be hosted in a managed AWS instance,
 but for now it can be developed in Docker.
 
-### shop-api
+**shop-api**
+
 Backend "microservice" that provides access to managed database.
 
-### shop-webapp
+**shop-webapp**
+
 Frontend "microservice" that hosts the web UI.
 
 ## Development
