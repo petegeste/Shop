@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
    shop-db:
       image: ${DOCKER_REGISTRY-}shop-db
       hostname: shopdb
@@ -27,23 +26,30 @@ services:
          SHOP_DB_PWD: "app_password"
          ASPNETCORE_Kestrel__Certificates__Default__Password: "A#bu#H*IB@#8bIP@#XFVGLY**O2zg8p2efy2vfp23t77:"
          ASPNETCORE_Kestrel__Certificates__Default__Path: shop-api.pfx
-      ports:
-      - "8081:80"
-      - "5444:443"
       depends_on:
       - shop-db
 
    shop-webapp:
       image: ${DOCKER_REGISTRY-}shop-webapp
+      hostname: shopwebapp
       build:
          context: shop-webapp/
          dockerfile: Dockerfile
       environment:
          ASPNETCORE_ENVIRONMENT: Production
          SHOP_API_HOST: "http://shopapi"
-      ports:
-      - "8080:80"
-      - "5443:443"
       depends_on:
       - shop-db
       - shop-api
+
+   proxy:
+      image: ${DOCKER_REGISTRY-}shop-proxy
+      hostname: shopproxy
+      build:
+         context: proxy/
+         dockerfile: Dockerfile
+      ports:
+         - 80:80
+      depends_on:
+      - shop-api
+      - shop-webapp

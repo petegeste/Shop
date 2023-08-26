@@ -5,11 +5,12 @@
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
       "composeLaunchServiceName": "shop-webapp",
-      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/",
+      "composeLaunchUrl": "localhost/",
       "serviceActions": {
         "shop-api": "StartDebugging",
         "shop-db": "DoNotStart",
-        "shop-webapp": "StartDebugging"
+        "shop-webapp": "StartDebugging",
+        "proxy": "StartWithoutDebugging"
       }
     }
   }

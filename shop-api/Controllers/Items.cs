@@ -54,9 +54,9 @@ namespace shop_api.Controllers
 
             var list = images.Select(i => new ProductImageQueryResult()
             {
-                ImageUrl = $"/image/{i.ImageId}",
+                ImageUrl = $"/api/image/{i.ImageId}",
                 ImageLength = i.ImageLen ?? 0,
-                ThumbnailUrl = $"/image/{i.ThumbnailId}",
+                ThumbnailUrl = $"/api/image/{i.ThumbnailId}",
                 ThumbnailLength = i.ThumbnailLen ?? 0,
                 Description = i.Description
             }).ToList();
@@ -65,10 +65,16 @@ namespace shop_api.Controllers
         }
 
         [HttpGet("/image/{id}")]
-        public async Task<ImageData> GetImage(Guid id)
+        public async Task<IActionResult> GetImage(Guid id)
         {
             var image = await DB.Images.FirstOrDefaultAsync(i => i.Id == id);
-            return image ?? throw new Exception("Image is not available");
+
+            if (image is null)
+            {
+                throw new Exception("Image is not available");
+            }
+
+            return File(image.Data, "image/jpeg");
         }
 
         [HttpPatch("/update/{id}")]
