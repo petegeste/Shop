@@ -23,7 +23,7 @@ namespace shop_api.Controllers
             return await DB.Products.ToListAsync();
         }
 
-        [HttpGet("item/{id}")]
+        [HttpGet("/item/{id}")]
         public async Task<Product> GetItem(Guid id)
         {
             return await DB.Products.FirstOrDefaultAsync(i => i.Id == id) ?? throw new ArgumentException("Item does not exist.");
@@ -35,6 +35,30 @@ namespace shop_api.Controllers
             DB.Products.Add(item);
             await DB.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpDelete("/item/{id}")]
+        public async Task DeleteItem(Guid id)
+        {
+            var product = await DB.Products
+                .Include(p => p.ProductImages)
+                .ThenInclude(i => i.Image)
+                .Include(p => p.ProductImages)
+                .ThenInclude(i => i.Thumbnail)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            if (product is null)
+            {
+                throw new Exception("The product does not exist.");
+            }
+
+            var thumbnails = product.ProductImages.Select(i => i.Thumbnail).Where(t => t is not null).Cast<ImageData>();
+            var images = product.ProductImages.Select(i => i.Image).Where(t => t is not null).Cast<ImageData>();
+            DB.RemoveRange(images);
+            DB.RemoveRange(thumbnails);
+            DB.RemoveRange(product.ProductImages);
+            DB.Remove(product);
+            await DB.SaveChangesAsync();
         }
 
         [HttpGet("/item/{id}/images")]

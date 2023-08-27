@@ -2,25 +2,27 @@
 @inject shop.ApiClient client
 <PageTitle>Shop | @Item?.Name</PageTitle>
 
-<div class="container-md m-0">
+<div class="container-md py-4 px-0 m-0">
     <div class="row">
         <div class="col-4">
-            <div class="container mb-4">
-                <h3>@Item?.Name</h3>
-                <p>@Item?.Description</p>
-                <p>$@Item?.Price</p>
+            <div class="row">
+                <div class="container mb-4">
+                    <h3>@Item?.Name</h3>
+                    <p>@Item?.Description</p>
+                    <p>$@Item?.Price</p>
+                </div>
             </div>
         </div>
         <div class="col-8">
-            <div id="carouselExample" class="carousel slide">
-                <div class="carousel-inner" style="height: 50vh">
+            <div id="carouselExample" class="carousel slide" style="width: 100%">
+                <div class="carousel-inner ratio ratio-4x3 bg-light" style="height: 75vh">
                     @{
                         bool first = true;
                     }
                     @foreach (var img in Images)
                     {
                         <div class="carousel-item@(first ? " active" : "")">
-                            <img src="@img.ImageUrl" class="d-block w-100" alt="@img.Description" style="object-fit: scale-down">
+                            <img src="@img.ImageUrl" class="d-block" alt="@img.Description" style="object-fit: scale-down; height: 100%; margin:auto">
                         </div>
                         first = false;
                     }
@@ -48,7 +50,7 @@
     {
         try
         {
-            Item = await client.ItemAsync(new Guid(ProductId!));
+            Item = await client.ItemGETAsync(new Guid(ProductId!));
             Images = (await client.ImagesAsync(Item.Id)).ToList();
         }
         catch

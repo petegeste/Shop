@@ -43,7 +43,7 @@
         }
       }
     },
-    "/api/Items/item/{id}": {
+    "/item/{id}": {
       "get": {
         "tags": [
           "Items"
@@ -80,6 +80,28 @@
                 }
               }
             }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Items"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }

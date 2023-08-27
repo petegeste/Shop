@@ -83,7 +83,15 @@
 
 <section>
     <h3>Existing items</h3>
-    
+    <ul class="list-group">
+        @foreach (var prd in Products)
+        {
+            <li class="list-group-item">
+                <button class="btn btn-close" @onclick="() => Delete(prd)"></button>
+                <span class="text-body">@prd.Name</span>
+            </li>
+        }
+    </ul>
 </section>
 
 @code {
@@ -91,17 +99,20 @@
     public byte[]? File { get; set; }
     public string? Description { get; set; }
     public bool IsUploading { get; set; }
+    public List<shop.Product>? Products { get; set; } = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
         ResetModel();
+        await LoadItems();
     }
 
-    private void Submit()
+    private async Task Submit()
     {
         client.AddAsync(Model).GetAwaiter().GetResult();
         ResetModel();
+        await LoadItems();
     }
 
     private void ResetModel()
@@ -110,6 +121,12 @@
         {
             ProductImages = new List<shop.ProductImage>()
         };
+    }
+
+    private async Task LoadItems()
+    {
+        var products = await client.AllAsync();
+        Products = products.ToList();
     }
 
     private void AddImage()
@@ -150,5 +167,11 @@
         {
             IsUploading = false;
         }
+    }
+
+    private async Task Delete(shop.Product product)
+    {
+        await client.ItemDELETEAsync(product.Id);
+        await LoadItems();
     }
 }
