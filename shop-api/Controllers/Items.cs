@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using shop_api.Model;
 using shop_db;
 using shop_db.Models;
@@ -32,6 +33,18 @@ namespace shop_api.Controllers
         [HttpPost("/add")]
         public async Task<IActionResult> AddItem([FromBody] Product item)
         {
+            var imgs = item.ProductImages.Select(i => i.Id).ToList();
+            item.ProductImages.Clear();
+            foreach (var guid in imgs)
+            {
+                var img = await DB.ProductImages.FirstOrDefaultAsync(i => i.Id == guid);
+                if (img is null)
+                {
+                    continue;
+                }
+
+                item.ProductImages.Add(img);
+            }
             DB.Products.Add(item);
             await DB.SaveChangesAsync();
             return Ok();

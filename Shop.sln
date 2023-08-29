@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proxy", "proxy", "{4EA233FC
 		proxy\nginx.conf = proxy\nginx.conf
 	EndProjectSection
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "shop-img-worker", "shop-img-worker\shop-img-worker.pyproj", "{FB047822-8A0A-4DD6-A1A4-07F04C344B7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,8 @@ Global
 		{F3620BFC-6E90-46D3-871B-9D2E75017978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3620BFC-6E90-46D3-871B-9D2E75017978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3620BFC-6E90-46D3-871B-9D2E75017978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB047822-8A0A-4DD6-A1A4-07F04C344B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB047822-8A0A-4DD6-A1A4-07F04C344B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

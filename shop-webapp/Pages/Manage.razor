@@ -78,7 +78,6 @@
             </div>
         </div>
     </EditForm>
-
 </section>
 
 <section>
@@ -96,7 +95,7 @@
 
 @code {
     public shop.Product? Model { get; set; }
-    public byte[]? File { get; set; }
+    public IBrowserFile? File { get; set; }
     public string? Description { get; set; }
     public bool IsUploading { get; set; }
     public List<shop.Product>? Products { get; set; } = new();
@@ -110,7 +109,7 @@
 
     private async Task Submit()
     {
-        client.AddAsync(Model).GetAwaiter().GetResult();
+        await client.AddAsync(Model);
         ResetModel();
         await LoadItems();
     }
@@ -129,15 +128,13 @@
         Products = products.ToList();
     }
 
-    private void AddImage()
+    private async Task AddImage()
     {
+        var file = new shop.FileParameter(File?.OpenReadStream(1_000_000), File?.Name);
+        var guid = await client.UploadAsync(file, Description);
         var image = new shop.ProductImage()
         {
-            Image = new shop.ImageData()
-            {
-                Data= File,
-                Length = File.Length
-            },
+            Id = guid,
             Description = Description
         };
         Model.ProductImages.Add(image);
@@ -145,28 +142,9 @@
         Description = "";
     }
 
-    private async Task LoadFile(InputFileChangeEventArgs e)
+    private void LoadFile(InputFileChangeEventArgs e)
     {
-        IsUploading = true;
-        try
-        {
-            using var fs = e?.File?.OpenReadStream(maxAllowedSize: 1_000_000);
-            if (fs is null)
-            {
-                return;
-            }
-            using var ms = new MemoryStream();
-            await fs.CopyToAsync(ms);
-            File = ms.ToArray();
-        }
-        catch (Exception ex)
-        {
-            ;
-        }
-        finally
-        {
-            IsUploading = false;
-        }
+        File = e?.File;
     }
 
     private async Task Delete(shop.Product product)

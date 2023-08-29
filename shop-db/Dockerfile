@@ -1,4 +1,8 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+﻿FROM postgres:15.4-bookworm AS base
+RUN apt-get update
+RUN apt-get install python3-pip python3-venv -y
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["shop-db.csproj", "."]
 RUN dotnet tool install --global dotnet-ef
@@ -13,7 +17,7 @@ SHELL ["/bin/bash", "-c"]
 RUN echo $'CREATE DATABASE shop_db;\n\\c shop_db\n' >> create.sql;
 RUN cat create_tables2.sql >> create.sql
 
-FROM postgres:11.5
+FROM base AS final
 LABEL author="Pete Gestewitz"
 LABEL description="shop-db demo database."
 LABEL version="1.0"
@@ -21,3 +25,4 @@ LABEL version="1.0"
 # Copy migration script to the init directory
 WORKDIR /docker-entrypoint-initdb.d
 COPY --from=build "/src/create.sql" "."
+COPY ./sqa-gen.sh /

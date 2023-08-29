@@ -10,7 +10,9 @@
         "shop-api": "StartDebugging",
         "shop-db": "DoNotStart",
         "shop-webapp": "StartDebugging",
-        "proxy": "StartWithoutDebugging"
+        "proxy": "StartWithoutDebugging",
+        "shop-img-worker": "DoNotStart",
+        "shop-messages": "StartWithoutDebugging"
       }
     }
   }

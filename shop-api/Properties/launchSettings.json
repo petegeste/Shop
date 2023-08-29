@@ -5,7 +5,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SHOP_DB_HOST": "localhost:5432",
+        "SHOP_DB_USER": "postgres",
+        "SHOP_DB_PWD": "app_password"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5014"
