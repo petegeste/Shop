@@ -17,3 +17,6 @@ This is a project to sell products.
 ## Todos
 
 - [ ] Build EF Core project with connection to AWS
+- [ ] Build k8s deployment
+- [ ] Implement Windows authentication
+- [ ] Clean up 

@@ -83,8 +83,11 @@ services:
       - image-cache:/image-cache
 
    shop-messages:
-      image: rabbitmq:3
+      image: ${DOCKER_REGISTRY-}shop-messages
       hostname: shopmessages
+      build:
+         context: messaging/
+         dockerfile: Dockerfile
       networks:
       - backend
 

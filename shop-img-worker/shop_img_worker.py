@@ -21,7 +21,7 @@ def resize(img_name):
         thumbnail.save(filename=thumbnail_path)
 
         carousel_path = os.path.join(images_root, "{0}-carousel.png".format(guid))
-        carousel = scale_crop(img, 1920, 1080)
+        carousel = scale_crop(img, 1920, 1440)
         carousel.save(filename=carousel_path)
 
     upload(thumbnail_path, guid, "thumbnail")
