@@ -2,6 +2,10 @@
 
 A project to test kubernetes development.
 
+>
+>**Please note:** This project is experimental, and is not suitable for production use.
+>
+
 ## Structure
 
 **shop-db**
