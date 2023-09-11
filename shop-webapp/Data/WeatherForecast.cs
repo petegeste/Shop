@@ -1,4 +1,4 @@
-namespace shop_api
+namespace shop_webapp.Data
 {
     public class WeatherForecast
     {

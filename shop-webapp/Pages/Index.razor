@@ -1,0 +1,44 @@
+﻿@page "/"
+@inject shop.ApiClient client
+<PageTitle>Shop | Home</PageTitle>
+
+@if (items is null) {
+    <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+}
+else if (items.Count == 0)
+{
+    <p>Sorry, no items to show.</p>
+    <button class="btn btn-secondary" @onclick="Reload">Reload</button>
+}
+
+<div class="album py-5">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in items ?? new List<shop.Product>())
+            {
+                <div class="col-md-4">
+                    <shop_webapp.Components.ItemSquare Product="item" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<shop.Product>? items { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Reload();
+    }
+
+    public async Task Reload()
+    {
+        items = (await client.AllAsync())?.ToList();
+    }
+}

@@ -1,0 +1,155 @@
+﻿@page "/manage"
+@inject shop.ApiClient client
+<PageTitle>Shop Management</PageTitle>
+<section>
+    <h3>Management</h3>
+    <EditForm Model="@Model" OnSubmit="@Submit">
+        <div class="container px-0">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <label for="name_input" class="form-label">Name</label>
+                        <InputText type="text" id="name_input" class="form-control" @bind-Value="Model!.Name" aria-label="Name" />
+                    </div>
+
+                    <div class="row">
+                        <label for="description_input" class="form-label">Description</label>
+                        <InputText type="text" id="description_input" class="form-control" @bind-Value="Model!.Description" aria-label="Description" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col px-0">
+                            <label for="price_input" class="form-label">Price</label>
+                            <InputNumber type="number" id="price_input" class="form-control" @bind-Value="Model!.Price" aria-label="Price" />
+                        </div>
+                        <div class="col px-0">
+                            <label for="inventory_input" class="form-label">Inventory</label>
+                            <InputNumber type="number" id="inventory_input" class="form-control" @bind-Value="Model!.Inventory" aria-label="Inventory" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <!-- Image list -->
+                    <div class="container">
+                        <div class="row">
+                            <label for="image_list" class="form-label">Images</label>
+                            <ul class="list-group" id="image_list">
+                                @foreach (var item in Model.ProductImages)
+                                {
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="file_input" class="form-label">File</label>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="description_input" class="form-label">Description</label>
+                                                    <InputText type="text" @bind-Value="@item.Description" id="description_input" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <InputFile class="form-control" id="file_input" OnChange="LoadFile" />
+                                @if (IsUploading)
+                                {
+                                    <p>Uploading, hold on </p>
+                                }
+                            </div>
+                            <div class="col">
+                                <InputText type="text" class="form-control" @bind-Value="Description" />
+                            </div>
+                            <div class="col-3">
+                                <button type="button" @onclick="AddImage" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-primary col-1">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+</section>
+
+<section>
+    <h3>Existing items</h3>
+    <ul class="list-group">
+        @foreach (var prd in Products)
+        {
+            <li class="list-group-item">
+                <button class="btn btn-close" @onclick="() => Delete(prd)"></button>
+                <span class="text-body">@prd.Name</span>
+            </li>
+        }
+    </ul>
+</section>
+
+@code {
+    public shop.Product? Model { get; set; }
+    public IBrowserFile? File { get; set; }
+    public string? Description { get; set; }
+    public bool IsUploading { get; set; }
+    public List<shop.Product>? Products { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        ResetModel();
+        await LoadItems();
+    }
+
+    private async Task Submit()
+    {
+        await client.AddAsync(Model);
+        ResetModel();
+        await LoadItems();
+    }
+
+    private void ResetModel()
+    {
+        Model = new shop.Product()
+        {
+            ProductImages = new List<shop.ProductImage>()
+        };
+    }
+
+    private async Task LoadItems()
+    {
+        var products = await client.AllAsync();
+        Products = products.ToList();
+    }
+
+    private async Task AddImage()
+    {
+        var file = new shop.FileParameter(File?.OpenReadStream(1_000_000), File?.Name);
+        var guid = await client.UploadAsync(file, Description);
+        var image = new shop.ProductImage()
+        {
+            Id = guid,
+            Description = Description
+        };
+        Model.ProductImages.Add(image);
+        File = null;
+        Description = "";
+    }
+
+    private void LoadFile(InputFileChangeEventArgs e)
+    {
+        File = e?.File;
+    }
+
+    private async Task Delete(shop.Product product)
+    {
+        await client.ItemDELETEAsync(product.Id);
+        await LoadItems();
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "shop-webapp",
+      "composeLaunchUrl": "localhost/",
+      "serviceActions": {
+        "shop-api": "StartDebugging",
+        "shop-db": "DoNotStart",
+        "shop-webapp": "StartDebugging",
+        "proxy": "StartWithoutDebugging",
+        "shop-img-worker": "DoNotStart",
+        "shop-messages": "StartWithoutDebugging"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "shop-db-debug": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SHOP_DB_HOST": "localhost:5432",
+        "SHOP_DB_USER": "postgres",
+        "SHOP_DB_PWD": "app_password"
+      }
+    }
+  }
+}

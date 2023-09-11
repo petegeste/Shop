@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: shop-app
+    labels:
+        App: dev
+spec: 
+    containers:
+        - name: shop-db
+          image: shop-db:local
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "app_password"
+          ports:
+            - name: db
+              containerPort: 5432
+              protocol: TCP
